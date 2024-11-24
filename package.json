@@ -17,6 +17,14 @@
     "ts",
     "bun"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MARKjotep/raboot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MARKjotep/raboot/issues"
+  },
+  "homepage": "https://github.com/MARKjotep/raboot#readme",
   "dependencies": {
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
