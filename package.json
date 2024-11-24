@@ -1,0 +1,34 @@
+{
+  "name": "raboot",
+  "version": "0.0.1",
+  "description": "raboot",
+  "author": "Marky <markjotep@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "link__": "mkdir -p ./src/core; ln -sf ../../../_misc/@.ts ./src/core; ln -sf ../_misc/tsconfig.json ./",
+    "build": "tsc && bun build ./src/index.ts --outdir ./dist --minify --packages external --target bun && rollup -c ./util/rollup.config.js"
+  },
+  "keywords": [
+    "ts",
+    "bun"
+  ],
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
+    "authored": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/pg": "^8.11.10",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
