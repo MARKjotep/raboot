@@ -232,6 +232,7 @@ declare class Builder {
     out: string;
     target: string;
     define: Record<string, string>;
+    exclude: string[];
     constructor({ dir, files, out, target, define, }: {
         dir: string;
         files: string[];
@@ -239,6 +240,9 @@ declare class Builder {
         target?: "browser" | "bun";
         define?: Record<string, string>;
     });
+    clear(c?: {
+        exclude: string[];
+    }): this;
     build(): this;
     watch(folder?: string): void;
 }

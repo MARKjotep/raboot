@@ -14,8 +14,9 @@ import { _r, response, S } from "./core/response";
 import { ROUTEcfg, setFolder, setPath } from "./core/router";
 import { LSocket, websocket } from "./core/wss";
 import { Render, Boot, dev, getHead, raboot, server } from "./core/raboot";
-import { watch } from "node:fs";
+import { readdirSync, rmSync, statSync, unlinkSync, watch } from "node:fs";
 import { isDir, isFile } from "./core/@n";
+import path from "node:path";
 
 // Buneary JS
 // Raboot
@@ -184,6 +185,7 @@ export class Builder {
   out: string;
   target: string;
   define: Record<string, string>;
+  exclude: string[] = [];
   constructor({
     dir,
     files,
@@ -202,6 +204,32 @@ export class Builder {
     this.out = out;
     this.target = target;
     this.define = define ?? {};
+    //
+  }
+  clear(c: { exclude: string[] } = { exclude: [] }) {
+    //
+    this.exclude = c.exclude.length ? c.exclude : this.exclude;
+
+    const recurse = (_PATH: string) => {
+      const dirs = readdirSync(_PATH);
+      if (dirs.length == 0) {
+        rmSync(_PATH, { recursive: true });
+        return;
+      }
+      dirs.forEach((ff) => {
+        if (ff.startsWith(".") || this.exclude.includes(ff)) return;
+        const _path = path.join(_PATH, ff);
+        if (statSync(_path).isDirectory()) {
+          recurse(_path);
+        } else {
+          unlinkSync(_path);
+        }
+      });
+    };
+
+    recurse(this.out);
+
+    return this;
   }
   build() {
     this.files.length &&
@@ -242,6 +270,7 @@ export class Builder {
       { recursive: true },
       async (event, filename) => {
         if (filename && filename.endsWith("tsx")) {
+          this.clear();
           this.build();
         }
       },

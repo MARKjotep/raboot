@@ -389,7 +389,9 @@ async function UPGRADE(this: Boot, wss: ROUTE) {
   });
 
   return "upgrade error";
-} /*
+}
+
+/*
 -------------------------
 FILE
 -------------------------

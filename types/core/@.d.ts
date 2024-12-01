@@ -29,7 +29,7 @@ export declare class Mapper<K, V> extends Map<K, V> {
 }
 export declare const numSequence: (length: number) => number[];
 export declare const RBYTES: RegExp;
-export declare const isFN: (v: any) => v is Function, isAsync: (v: any) => v is Function, isNumber: (value: any) => boolean, isDict: (val: object) => boolean, isArraybuff: (val: any) => val is string | Uint8Array | ArrayBuffer, isClassOrId: (k: string) => boolean, isBool: (v: any) => v is boolean, isStr: (v: any) => v is string, isArr: (v: any) => v is any[], isObj: (v: any) => v is object, isNum: (v: any) => v is number;
+export declare const isFN: (v: any) => v is Function, isAsync: (v: any) => v is Function, isNumber: (value: any) => boolean, isDict: (val: object) => boolean, isArraybuff: (val: any) => val is string | Uint8Array | ArrayBuffer, isClassOrId: (k: string) => boolean, isBool: (v: any) => v is boolean, isStr: (v: any) => v is string, isArr: (v: any) => v is any[], isObj: (v: any) => v is object, isNum: (v: any) => v is number, isInt: (str: string) => boolean;
 export declare const oVals: {
     <T>(o: {
         [s: string]: T;
@@ -49,7 +49,7 @@ export declare const oVals: {
     <T extends {}, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
     (target: object, ...sources: any[]): any;
 }, oLen: (ob: object) => number;
-export declare const strip: (char: string, tostrip: string) => string, buffed: (str: string) => Buffer, hdigest: (...salt: string[]) => Buffer, ngify: (str: object) => string, sparse: (str: string) => any, reCamel: (_case: string) => string;
+export declare const strip: (str: string, charToStrip: string) => string, stripOnce: (char: string, tostrip: string) => string, buffed: (str: string) => Buffer, hdigest: (...salt: string[]) => Buffer, ngify: (str: object) => string, sparse: (str: string) => any, reCamel: (_case: string) => string;
 export declare const getSecret: () => string, getByteRange: (fsize: number, range: string) => [number, number, number], getArgs: (params: string[], vals: string[]) => obj<string>;
 export declare const pathType: (wrd: string, isFinal?: boolean) => [any, string];
 export declare function parsePath(path: string): {
