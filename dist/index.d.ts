@@ -2,13 +2,13 @@ import * as bun from 'bun';
 import { Server, ServerWebSocket, Serve, WebSocketHandler } from 'bun';
 import { ServerSide, Auth } from 'authored';
 
-declare class $$ {
-    static set p(a: any);
-}
 interface obj<T> {
     [Key: string]: T;
 }
 type V = string | number | boolean;
+declare class $$ {
+    static set p(a: any);
+}
 
 declare class request {
     req: Request;
@@ -226,5 +226,21 @@ declare class Raboot extends _r {
     jwt<T>(...arg: any[]): any;
     jwt_refresh<T>(...arg: any[]): any;
 }
+declare class Builder {
+    dir: string;
+    files: string[];
+    out: string;
+    target: string;
+    define: Record<string, string>;
+    constructor({ dir, files, out, target, define, }: {
+        dir: string;
+        files: string[];
+        out: string;
+        target?: "browser" | "bun";
+        define?: Record<string, string>;
+    });
+    build(): this;
+    watch(folder?: string): void;
+}
 
-export { $$, Raboot, Render, response, websocket };
+export { $$, Builder, Raboot, Render, response, websocket };

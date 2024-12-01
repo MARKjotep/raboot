@@ -1,3 +1,10 @@
+export interface obj<T> {
+    [Key: string]: T;
+}
+export type dict<K extends keyof any, T> = {
+    [P in K]: T;
+};
+export type V = string | number | boolean;
 export declare function Singleton<T extends {
     new (...args: any[]): any;
 }>(constructor: T): {
@@ -20,10 +27,6 @@ export declare class Mapper<K, V> extends Map<K, V> {
     map(map: Map<K, V>): void;
     ass<T>(key: K, obj: T): void;
 }
-export interface obj<T> {
-    [Key: string]: T;
-}
-export type V = string | number | boolean;
 export declare const numSequence: (length: number) => number[];
 export declare const RBYTES: RegExp;
 export declare const isFN: (v: any) => v is Function, isAsync: (v: any) => v is Function, isNumber: (value: any) => boolean, isDict: (val: object) => boolean, isArraybuff: (val: any) => val is string | Uint8Array | ArrayBuffer, isClassOrId: (k: string) => boolean, isBool: (v: any) => v is boolean, isStr: (v: any) => v is string, isArr: (v: any) => v is any[], isObj: (v: any) => v is object, isNum: (v: any) => v is number;

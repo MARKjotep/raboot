@@ -41,5 +41,6 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "type": "module"
 }

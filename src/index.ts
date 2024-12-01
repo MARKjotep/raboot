@@ -14,7 +14,7 @@ import { _r, response, S } from "./core/response";
 import { ROUTEcfg, setFolder, setPath } from "./core/router";
 import { LSocket, websocket } from "./core/wss";
 import { Render, Boot, dev, getHead, raboot, server } from "./core/raboot";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { watch } from "node:fs";
 import { isDir, isFile } from "./core/@n";
 
 // Buneary JS
@@ -171,3 +171,85 @@ const setIndex = async (rq: Request, apt: string) => {
   const AB = inflateSync(await CTX.arrayBuffer());
   AB.byteLength && write(apt + "index.html", AB);
 };
+
+/*
+-------------------------
+Builder
+-------------------------
+*/
+
+export class Builder {
+  dir: string;
+  files: string[];
+  out: string;
+  target: string;
+  define: Record<string, string>;
+  constructor({
+    dir,
+    files,
+    out,
+    target = "browser",
+    define = {},
+  }: {
+    dir: string;
+    files: string[];
+    out: string;
+    target?: "browser" | "bun";
+    define?: Record<string, string>;
+  }) {
+    this.dir = dir;
+    this.files = files.map((m) => dir + "/" + m);
+    this.out = out;
+    this.target = target;
+    this.define = define ?? {};
+  }
+  build() {
+    this.files.length &&
+      Bun.build({
+        entrypoints: this.files,
+        outdir: this.out,
+        splitting: true,
+        minify: {
+          identifiers: true,
+          whitespace: true,
+          syntax: true,
+        },
+        target: (this.target as "browser") ?? "browser",
+        naming: {
+          chunk: "[name]-[hash].[ext]",
+          entry: "[dir]/[name].[ext]",
+          asset: "[name]-[hash].[ext]",
+        },
+        define: {
+          ...this.define,
+        },
+        experimentalCss: true,
+      }).then((e) => {
+        if (e.success) {
+          $$.p = `success`;
+        } else {
+          $$.p = e.logs;
+        }
+      });
+
+    return this;
+  }
+  watch(folder?: string) {
+    const watchFolder = folder ? this.dir + folder : this.dir;
+
+    const watcher = watch(
+      watchFolder,
+      { recursive: true },
+      async (event, filename) => {
+        if (filename && filename.endsWith("tsx")) {
+          this.build();
+        }
+      },
+    );
+    process.on("SIGINT", () => {
+      console.log("\nwatcher closed...");
+      watcher.close();
+      process.exit(0);
+    });
+  }
+}

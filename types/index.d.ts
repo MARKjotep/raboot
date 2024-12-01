@@ -20,3 +20,19 @@ export declare class Raboot extends _r {
     jwt<T>(...arg: any[]): any;
     jwt_refresh<T>(...arg: any[]): any;
 }
+export declare class Builder {
+    dir: string;
+    files: string[];
+    out: string;
+    target: string;
+    define: Record<string, string>;
+    constructor({ dir, files, out, target, define, }: {
+        dir: string;
+        files: string[];
+        out: string;
+        target?: "browser" | "bun";
+        define?: Record<string, string>;
+    });
+    build(): this;
+    watch(folder?: string): void;
+}
