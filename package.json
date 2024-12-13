@@ -1,6 +1,6 @@
 {
   "name": "raboot",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "raboot",
   "author": "Marky <markjotep@gmail.com>",
   "license": "MIT",
@@ -10,8 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "cp_core": "mkdir -p ./src/core; cp -L ../_misc/@.ts ./src/core; cp -L ../_misc/@n.ts ./src/core;",
-    "link__": "mkdir -p ./src/core; ln -sf ../../../_misc/@.ts ./src/core; ln -sf ../../../_misc/@n.ts ./src/core; ln -sf ../_misc/tsconfig.json ./",
+    "cp_core": "mkdir -p ./src/core; cp -L ../_misc/@.ts ./src/core; cp -L ../_misc/@n.ts ./src/core; ln -sf ../_misc/tsconfig.json ./;",
     "build": "tsc && bun build ./src/index.ts --outdir ./dist --minify --packages external --target bun && rollup -c ./util/rollup.config.js"
   },
   "keywords": [
@@ -27,10 +26,11 @@
   },
   "homepage": "https://github.com/MARKjotep/raboot#readme",
   "dependencies": {
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1",
-    "authored": "^0.0.1"
+    "authored": "^0.0.2",
+    "hellmo": "^0.0.6"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
@@ -38,7 +38,7 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "directories": {
     "test": "test"

@@ -233,6 +233,7 @@ declare class Builder {
     target: string;
     define: Record<string, string>;
     exclude: string[];
+    private clearing?;
     constructor({ dir, files, out, target, define, }: {
         dir: string;
         files: string[];

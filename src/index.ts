@@ -186,6 +186,7 @@ export class Builder {
   target: string;
   define: Record<string, string>;
   exclude: string[] = [];
+  private clearing?: boolean = false;
   constructor({
     dir,
     files,
@@ -202,6 +203,7 @@ export class Builder {
     this.dir = dir;
     this.files = files.map((m) => dir + "/" + m);
     this.out = out;
+    isDir(out);
     this.target = target;
     this.define = define ?? {};
     //
@@ -209,6 +211,7 @@ export class Builder {
   clear(c: { exclude: string[] } = { exclude: [] }) {
     //
     this.exclude = c.exclude.length ? c.exclude : this.exclude;
+    this.clearing = true;
 
     const recurse = (_PATH: string) => {
       const dirs = readdirSync(_PATH);
@@ -270,7 +273,7 @@ export class Builder {
       { recursive: true },
       async (event, filename) => {
         if (filename && filename.endsWith("tsx")) {
-          this.clear();
+          this.clearing && this.clear();
           this.build();
         }
       },
